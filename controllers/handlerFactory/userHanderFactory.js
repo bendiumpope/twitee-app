@@ -64,7 +64,9 @@ export const signUp = async (Model, validatorSchema, link, req, res, next) => {
 
 export const verifyUserAccount = async (Model, req, res, next) => {
   try {
-    const { secretToken } = req.query;
+    const { secretToken } = req.body
+
+    console.log(secretToken);
 
     let user;
     try {
