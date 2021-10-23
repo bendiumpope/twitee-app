@@ -10,14 +10,14 @@ router.post("/signup", userSignUp);
 router.post("/verify", verifyUser);
 router.post("/signin", userSignIn);
 
-// router.use(protect(User));
+router.use(protect(User));
 
-router.get("/me", protect(User), getProfile);
+router.get("/me", getProfile);
 router.patch(
-  "/updateMe", protect(User),
+  "/updateMe",
   updateProfile
 );
-router.delete("/deleteMe", protect(User), deleteMe);
+router.delete("/deleteMe", deleteMe);
 
 
 export default router;

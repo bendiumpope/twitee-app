@@ -6,6 +6,7 @@ import xss from 'xss-clean';
 import cors from 'cors';
 import HttpError from './utils/http-error';
 import userRouter from "./routes/userRoutes";
+import postRouter from "./routes/postRoutes";
 
 const app = express();
 
@@ -34,7 +35,8 @@ app.use((req, res, next) => {
 app.use(cors());
 
 
-app.use("/api/v1/users/", userRouter);
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/posts", postRouter)
 
 
 
