@@ -7,7 +7,7 @@ import User from "../models/userModel";
 const router = Router();
 
 router.post("/signup", userSignUp);
-router.get("/verify", verifyUser);
+router.post("/verify", verifyUser);
 router.post("/signin", userSignIn);
 
 router.use(protect(User));
