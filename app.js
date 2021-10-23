@@ -35,6 +35,7 @@ app.use(cors());
 
 
 app.use("/api/v1/users/", userRouter);
+app.use('')
 
 
 app.all('*', (req, res, next) => {
