@@ -13,7 +13,7 @@ export const createPost = (req, res, next) => {
 };
 
 export const getPosts = (req, res, next) => {
-  getAllDataController(Post, "post", res, next);
+  getAllDataController(Post, "post", {}, res, next);
 };
 
 export const getPost = (req, res, next) => {
@@ -31,8 +31,8 @@ export const deletePost = async (req, res, next) => {
     const { _id: id } = req.user;
     const {postId} = req.params
     const post = await Post.findById(postId);
-
-    if (post.user.toString() !== id.toString()) {
+    console.log(post)
+    if (post.user._id.toString() !== id.toString()) {
       return next(
         new HttpError("Your are not authized to access this route", 402)
       );

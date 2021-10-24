@@ -16,6 +16,15 @@ const postSchema = new mongoose.Schema(
   }
 );
 
+postSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "user",
+    select: "_id name",
+  });
+
+  next();
+});
+
 const Post = mongoose.model("Post", postSchema);
 
 export default Post;

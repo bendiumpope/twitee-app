@@ -24,7 +24,10 @@ export const signUp = async (Model, validatorSchema, link, req, res, next) => {
       );
     }
     const passwordHash = await bcrypt.hash(userRequest.password, 8);
+    const confirmPasswordHash = await bcrypt.hash(userRequest.confirmPassword, 8);
     userRequest.password = passwordHash;
+    userRequest.confirmPassword = confirmPasswordHash;
+    
 
     const newsecretToken = generateToken(userRequest);
 

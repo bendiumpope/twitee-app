@@ -8,13 +8,30 @@ const commentSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.ObjectId,
-      ref: "User"
+      ref: "User",
+    },
+    post: {
+      type: mongoose.Schema.ObjectId,
+      ref: "Post",
     },
   },
   {
     timestamps: true,
   }
 );
+
+commentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "user",
+    select: "_id name",
+  })
+  this.populate({
+    path:"post"
+  });
+
+  next();
+});
+
 
 const Comment = mongoose.model("Comment", commentSchema);
 
