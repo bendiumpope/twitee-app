@@ -21,17 +21,17 @@ const likeSchema = new mongoose.Schema(
   }
 );
 
-likeSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "user",
-    select: "_id name",
-  });
-  this.populate({
-    path: "post",
-  });
+// likeSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "user",
+//     select: "_id name",
+//   });
+//   this.populate({
+//     path: "post",
+//   });
 
-  next();
-});
+//   next();
+// });
 
 const Like = mongoose.model("Like", likeSchema);
 
