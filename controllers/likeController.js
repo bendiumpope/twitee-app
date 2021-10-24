@@ -8,13 +8,16 @@ import {
 
 export const createLike = async (req, res, next) => {
   try {
-    const haveUserLiked = await Like.find({ user: { $eq: req.user._id } });
+    const haveUserLiked = await Like.find({ post: { $eq: req.params.postId }, user: { $eq: req.user._id } });
 
-    if (haveUserLiked.length < 1) {
-      createController(Like, likeValidationSchema, "like", req, res, next);
+    if (
+      haveUserLiked.length === 1 
+    ) {
+      return next(new HttpError(`You have already liked or disliked this post`, 403));
     }
 
-    return next(new HttpError('you have already liked this post', 403));
+    createController(Like, likeValidationSchema, "like", req, res, next);
+
   } catch (error) {
     return next(new HttpError('An error occure please try again', 500));
   }

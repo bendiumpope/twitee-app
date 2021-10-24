@@ -51,10 +51,7 @@ export const getAllDataController = async (
     
     let data = await Model.find(queryData);
 
-    // if (data.length < 1) {
-    //   data = `No ${controllerType} added yet`;
-    // }
-
+    console.log(data)
     res.status(200).json({
       message: "success.",
       data: data,

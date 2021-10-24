@@ -52,6 +52,6 @@ export const deletePost = async (req, res, next) => {
       data: null,
     });
   } catch (error) {
-    return next(new HttpError("Deleting product failed", 500));
+    return next(new HttpError("Deleting post failed", 500));
   }
 };
