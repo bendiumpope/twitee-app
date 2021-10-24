@@ -3,17 +3,19 @@ import mongoose from "mongoose";
 const likeSchema = new mongoose.Schema(
   {
     likeType: {
-        type: String,
-        enum:['like', 'dislike'],
-        required: true,
+      type: String,
+      enum: ["like", "dislike"],
+      required: true,
     },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
+      required: true,
     },
     post: {
       type: mongoose.Schema.ObjectId,
       ref: "Post",
+      required: true,
     },
   },
   {

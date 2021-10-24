@@ -8,10 +8,10 @@ import {
 
 export const createLike = async (req, res, next) => {
   try {
-    const haveUserLiked = await Like.find({ post: { $eq: req.body.postId }, user: { $eq: req.user._id } });
-
+    const haveUserLiked = await Like.find({ post: { $eq: req.params.postId }, user: { $eq: req.user._id } });
+    
     if (
-      haveUserLiked.length === 1 
+      haveUserLiked.length > 0 
     ) {
       return next(new HttpError(`You have already liked or disliked this post`, 403));
     }
