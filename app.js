@@ -8,6 +8,7 @@ import HttpError from './utils/http-error';
 import userRouter from "./routes/userRoutes";
 import postRouter from "./routes/postRoutes";
 import commentRouter from "./routes/commentRoutes";
+import likeRouter from "./routes/likeRoutes";
 
 const app = express();
 
@@ -39,6 +40,7 @@ app.use(cors());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter)
 app.use("/api/v1/comments", commentRouter);
+app.use("/api/v1/likes", likeRouter)
 
 
 

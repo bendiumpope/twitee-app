@@ -1,5 +1,4 @@
 import Comment from "../models/commentModel";
-import HttpError from "../utils/http-error";
 import commentValidationSchema from "../utils/joiValidators/commentValidation";
 import { createController, deleteDataController, getAllDataController, updateDataController } from "./handlerFactory/commonHandlerFactory";
 
