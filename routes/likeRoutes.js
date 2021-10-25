@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createLike, getPostLikes } from "../controllers/likeController";
+import { createLike, getPostLikes, getPostWithLikes } from "../controllers/likeController";
 
 
 import { protect } from "../middle-wares/auth-middleware";
@@ -12,5 +12,6 @@ router.use(protect(User));
 
 router.post("/:postId", createLike);
 router.get("/:postId", getPostLikes);
+router.get("/", getPostWithLikes);
 
 export default router;
