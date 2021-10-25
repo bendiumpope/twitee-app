@@ -30,7 +30,6 @@ export const createController = async (
       data: savedRequest,
     });
   } catch (error) {
-    console.log(error)
     const err = new HttpError(
       `Could not create ${controllerType}, please try again.`,
       500
@@ -51,7 +50,7 @@ export const getAllDataController = async (
     
     let data = await Model.find(queryData);
 
-    console.log(data)
+    
     res.status(200).json({
       message: "success.",
       data: data,
