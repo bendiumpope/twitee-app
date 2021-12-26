@@ -59,6 +59,7 @@ export const signUp = async (Model, validatorSchema, link, req, res, next) => {
       token: newsecretToken,
     });
   } catch (error) {
+    console.log(error)
       return next(
       new HttpError("Could not register user, please try again.", 500)
     );
