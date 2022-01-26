@@ -2,10 +2,9 @@ import bcrypt from "bcryptjs";
 
 import HttpError from "../../utils/http-error";
 import { decodeToken, generateToken } from "../../utils/jwt/Jwtoken";
-import mailer from "../../utils/emailService/sendEmail";
+import sendEmail from "../../utils/emailService/sendEmail";
 import { filterObj } from "../../utils/utils";
 
-const fromUser = process.env.GMAIL_USER;
 
 export const signUp = async (Model, validatorSchema, link, req, res, next) => {
   try {
@@ -24,33 +23,22 @@ export const signUp = async (Model, validatorSchema, link, req, res, next) => {
       );
     }
     const passwordHash = await bcrypt.hash(userRequest.password, 8);
-    const confirmPasswordHash = await bcrypt.hash(userRequest.confirmPassword, 8);
+    const confirmPasswordHash = await bcrypt.hash(
+      userRequest.confirmPassword,
+      8
+    );
     userRequest.password = passwordHash;
     userRequest.confirmPassword = confirmPasswordHash;
-    
 
     const newsecretToken = generateToken(userRequest);
 
-    const html = `
-        <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
-            <h2 style="text-align: center; text-transform: uppercase;color: teal;">Welcome to Edes Store.</h2>
-            <p>Congratulations! You're almost set to start using twitee App.
-                Just click the button below to validate your email address.
-            </p>
-
-            <a href="${link}?secretToken=${newsecretToken}" style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">Click here</a>
-
-            <p>Or click the link below</p>
-
-            <div>${link}?secretToken=${newsecretToken}</div>
-        </div>`;
+    const text = `Congratulations! You're almost set to start using Edes Store. Just click the button below to validate your email address., please visit ${link}?secretToken=${newsecretToken} to confirm your mail`;
 
     // Send email
-    await mailer.sendEmail(
-      fromUser,
+    await sendEmail(
       userRequest.email,
-      "Please verify your email!",
-      html
+      "Tweet app: Please verify your email!",
+      text
     );
 
     res.status(201).json({
@@ -59,8 +47,8 @@ export const signUp = async (Model, validatorSchema, link, req, res, next) => {
       token: newsecretToken,
     });
   } catch (error) {
-    console.log(error)
-      return next(
+    console.log(error);
+    return next(
       new HttpError("Could not register user, please try again.", 500)
     );
   }
@@ -68,7 +56,7 @@ export const signUp = async (Model, validatorSchema, link, req, res, next) => {
 
 export const verifyUserAccount = async (Model, req, res, next) => {
   try {
-    const { secretToken } = req.body
+    const { secretToken } = req.body;
 
     console.log(secretToken);
 
@@ -82,8 +70,8 @@ export const verifyUserAccount = async (Model, req, res, next) => {
     const newUser = await new Model(user);
     await newUser.save();
 
-      const newSecretToken = generateToken({ ...newUser });
-      req.headers.authorization = `Bearer ${newSecretToken}`;
+    const newSecretToken = generateToken({ ...newUser });
+    req.headers.authorization = `Bearer ${newSecretToken}`;
 
     res.status(200).json({
       message: "Verification is Successful Thank you! You may now login.",
@@ -111,7 +99,6 @@ export const signIn = async (Model, req, res, next) => {
     const token = generateToken(loginUser);
 
     req.headers.authorization = `Bearer ${token}`;
-
 
     return res.status(200).json({
       message: "Success",
